@@ -16,7 +16,7 @@ public class App {
             {0, 4, 8}, {2, 4, 6}  // diagonales
     };
 
-    private static char[] board = new char[SIZE];
+    private char[] board = new char[SIZE];
     private static Scanner scanner = new Scanner(System.in);
 
     private static final Logger LOGGER = Logger.getLogger(App.class.getName()); //using log instead sout
@@ -24,11 +24,14 @@ public class App {
 
 
     public static void main(String[] args) {
-        startGame();
+
+    // create an instance of app and call this instance method
+        App app = new App();
+        app.startGame();
     }
 
     // A method that starts the game and controls its flow
-    private static void startGame() {
+    private void startGame() {
         LOGGER.info("Welcome to Tic-Tac-Toe! Enter a number from 1 to 9 to select a box.");
         initializeBoard();
         while (true) {
@@ -42,7 +45,7 @@ public class App {
         LOGGER.info("Thanks for playing! Created by Shreyas Saha.");
     }
 
-    private static boolean checkGameState(char marker) {
+    private boolean checkGameState(char marker) {
         if (checkWinner(marker)) {
             printBoard();
             if (marker == SYMBOL_PLAYER) {
@@ -62,19 +65,19 @@ public class App {
 
 
     //fill the board with empty cells
-    private static void initializeBoard() {
+    private void initializeBoard() {
         for (int i = 0; i < SIZE; i++) {
             board[i] = EMPTY_CELL;
         }
     }
 
 
-    private static void printBoard() {
+    private void printBoard() {
         String boardString = createBoardString();
         LOGGER.info(boardString); //log the board string
     }
 
-    private static String createBoardString() {
+    private String createBoardString() {
         StringBuilder sb = new StringBuilder();
         sb.append("\n ").append(board[0]).append(" | ").append(board[1]).append(" | ").append(board[2]);
         sb.append("\n-----------");
@@ -85,13 +88,13 @@ public class App {
     }
 
 
-    private static void handlePlayerMove() {
+    private void handlePlayerMove() {
         int input = getPlayerInput();
         makeMove(input, SYMBOL_PLAYER);
     }
 
 
-    private static int getPlayerInput() {
+    private int getPlayerInput() {
         int input;
         while (true) {
             LOGGER.info("Enter a box number (1-9): ");
@@ -104,18 +107,18 @@ public class App {
     }
 
 
-    private static boolean isValidMove(int input) {
+    private boolean isValidMove(int input) {
         return input > 0 && input <= SIZE && board[input - 1] == EMPTY_CELL;
     }
 
 
-    private static void handleComputerMove() {
+    private void handleComputerMove() {
         int randomMove = getRandomMove();
         makeMove(randomMove, SYMBOL_COMPUTER);
     }
 
 
-    private static int getRandomMove() {
+    private int getRandomMove() {
         int randomMove;
         while (true) {
             //choose the random cell on board
@@ -127,12 +130,12 @@ public class App {
     }
 
 
-    private static void makeMove(int index, char marker) {
+    private void makeMove(int index, char marker) {
         board[index] = marker;
     }
 
 
-    private static boolean checkWinner(char marker) {
+    private boolean checkWinner(char marker) {
         for (int[] combination : WINNING_COMBINATIONS) {
             if (board[combination[0]] == marker && board[combination[1]] == marker && board[combination[2]] == marker) {
                 return true;
@@ -142,7 +145,7 @@ public class App {
     }
 
 
-    private static boolean isBoardFull() {
+    private boolean isBoardFull() {
         for (char cell : board) {
             if (cell == EMPTY_CELL) {
                 return false;
